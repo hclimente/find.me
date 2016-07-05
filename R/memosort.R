@@ -1,13 +1,13 @@
 #' Function to sort gene mutation matrix
 #' from https://gist.github.com/dakl/5974ac1d78dac88c1c78
 #' 
-#' @param M matrix, genes as rows, samples as columns
+#' @param mutmat matrix, genes as rows, samples as columns
 #' @param sortGenes boolean wheather or not to sort genes (rows)
-memoSort <- function(M, sortGenes=TRUE) {
+memoSort <- function(mutmat, sortGenes=TRUE) {
   if(sortGenes){
-    geneOrder <- sort(rowSums(M), decreasing=TRUE, index.return=TRUE)$ix;
+    geneOrder <- sort(rowSums(mutmat), decreasing=TRUE, index.return=TRUE)$ix;
   } else {
-    geneOrder <- 1:nrow(M)
+    geneOrder <- 1:nrow(mutmat)
   }
   scoreCol <- function(x) {
     score <- 0;
@@ -20,7 +20,7 @@ memoSort <- function(M, sortGenes=TRUE) {
     score <- score + sum(x*(length(x):1))
     return(score);
   }
-  scores <- apply(M[geneOrder, ], 2, scoreCol);
+  scores <- apply(mutmat[geneOrder, ], 2, scoreCol);
   sampleOrder <- order(scores, decreasing = TRUE)# sort(scores, decreasing=TRUE, index.return=TRUE)$ix;
-  return(M[geneOrder, sampleOrder]);
+  return(mutmat[geneOrder, sampleOrder]);
 }
