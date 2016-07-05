@@ -2,13 +2,15 @@
 
 ## Install
 
-Install it directly from GitHub:
+Install it from local source:
 
 ```{r}
-# from local source
 install.packages("/path/oncoprint", repos = NULL, type="source")
+```
 
-# from github
+Or install it directly from GitHub:
+
+```{r}
 library(devtools)
 install_github("hclimente/oncoprint")
 ```
