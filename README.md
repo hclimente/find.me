@@ -5,8 +5,12 @@
 Install it directly from GitHub:
 
 ```{r}
+# from local source
+install.packages("/path/oncoprint", repos = NULL, type="source")
+
+# from github
 library(devtools)
-install_github("dakl/oncoprint")
+install_github("hclimente/oncoprint")
 ```
 
 ## Usage
