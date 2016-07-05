@@ -43,13 +43,14 @@ Row names are genes, column names are samples. The following annotations are all
 * Ampilifications (`AMP`), red fill
 * Deletions (`HOMDEL`), blue fill
 * Somatic mutations (`MUT`), green box
+* Splicing alterations (`SPLICING`), grey box
 * Germline mutations (`GERMLINE`), purple box
 * Upregulation (`UP`), red outline
 * Downregulation (`DOWN`), blue outline
 
 Each element is changable by passing (defaults listed below)
 ```
-keys = list(somatic = "MUT", germline = "GERMLINE", amp = "AMP",
-            del = "HOMDEL", upreg = "UP", downreg = "DOWN")
+keys=list(somatic="MUT", germline="GERMLINE", amp="AMP", 
+          del="HOMDEL", upreg="UP", downreg="DOWN", splicing="SPLICING")
 ```
 to the function call. Also, the genes can be sorted by most altered gene by passing `sortGenes = TRUE` (default `FALSE`, which keeps order from matrix). Samples are always sorted using an adaptation of the algorithm used in cBioPortal. 
