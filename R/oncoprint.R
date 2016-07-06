@@ -58,11 +58,11 @@ oncoprint <- function(M, keys=list(somatic="MUT", germline="GERMLINE", amp="AMP"
   alterations <- merge(alterations,plot.params)
   
   plot.colors <- c("amp" = "firebrick", "del" = "blue", "up" = NA, "down" = NA,
-                   "splicing" = "#2F4F4F", "germline" = "purple", "somatic" = "forestgreen")
+                   "splicing" = "forestgreen", "germline" = "purple", "somatic" = "#36454F")
     
   ggplot() + 
     geom_tile(data=background.m, aes(x=patient, y=gene), fill="#DCDCDC", colour="white", size=1.1) + 
-    geom_tile(data=alterations, aes(x=patient, y=gene, fill=alteration, size=size, width=width, height=height)) +
+    geom_tile(data=alterations, aes(x=patient, y=gene, fill=alteration, size=size, width=width, height=height),alpha=0.5) +
     scale_fill_manual(values=plot.colors) +
     theme_minimal() + 
     labs(x="Sample", y="Gene") +
