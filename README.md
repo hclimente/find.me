@@ -17,6 +17,8 @@ install_github("hclimente/oncoprint")
 
 ## Usage
 
+### Create oncoprint
+
 This package can be used to create beautiful oncoprints in R. 
 
 ```
@@ -49,8 +51,23 @@ Row names are genes, column names are samples. The following annotations are all
 * Downregulation (`DOWN`), blue outline
 
 Each element is changable by passing (defaults listed below)
+
 ```
 keys=list(somatic="MUT", germline="GERMLINE", amp="AMP", 
           del="HOMDEL", upreg="UP", downreg="DOWN", splicing="SPLICING")
 ```
+
 to the function call. Also, the genes can be sorted by most altered gene by passing `sortGenes = TRUE` (default `FALSE`, which keeps order from matrix). Samples are always sorted using an adaptation of the algorithm used in cBioPortal. 
+
+### Assess significance
+
+I implemented an estimate of the mutual exclusion significance. `me.test.permutateSamples` shuffles the alterations for each gene and measures the number of samples covered. Then, it calculates an empirical p-value for the actual coverage.
+
+```
+library(oncoprint)
+data(tcga_brca)
+
+mutmat <- getSortedMatrix(tcga_brca)
+me.test.permutateSamples(mutmat)
+# [1] 0.000999001
+```
