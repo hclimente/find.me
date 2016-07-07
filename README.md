@@ -61,13 +61,4 @@ to the function call. Also, the genes can be sorted by most altered gene by pass
 
 ### Assess significance
 
-I implemented an estimate of the mutual exclusion significance. `me.test.permutateSamples` shuffles the alterations for each gene and measures the number of samples covered. Then, it calculates an empirical p-value for the actual coverage.
-
-```
-library(oncoprint)
-data(tcga_brca)
-
-mutmat <- getSortedMatrix(tcga_brca)
-me.test.permutateSamples(mutmat)
-# [1] 0.000999001
-```
+**Work in progress**
