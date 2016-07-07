@@ -6,8 +6,6 @@
 #' @param n integer specifying the number of permutations
 me.test.permutateSamples <- function(mutmat, n=1000){
   
-  min.p <- 1/(ncol(mutmat)+1)
-  
   # convert to binary
   bin.mutmat <- mutmat > 0
   
