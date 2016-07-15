@@ -39,5 +39,5 @@ getSortedMatrix <- function(M, keys=list(somatic="MUT", germline="GERMLINE", amp
   mutmat <- incrementMatrix(M=mutmat, events=alterations, scoring=scoringMatrix)
   mutmat <- memoSort(mutmat, sortGenes = sortGenes)
 
-  return(mutmat)
+  list(mutmat=mutmat,alterations=alterations,genes=genes,patients=patients)
 }

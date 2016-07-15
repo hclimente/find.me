@@ -66,7 +66,7 @@ I implemented the weight function *W* described in [Dendrix paper](http://www.nc
 ```
 library(oncoprint)
 data(tcga_brca)
-mutmat <- getSortedMatrix(tcga_brca)
+mutmat <- getSortedMatrix(tcga_brca)$mutmat
 me.test.permutateSamples(mutmat, n=10000)
 # [1] 9.999e-05
 ```
