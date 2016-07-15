@@ -4,7 +4,7 @@
 #' 
 #' @param mutmat matrix, genes as rows, samples as columns
 #' @param n integer specifying the number of permutations
-me.test.permutateSamples <- function(mutmat, n=1000){
+me.test.permutateSamples <- function(mutmat, n=10000){
   
   # convert to binary
   bin.mutmat <- mutmat > 0
@@ -16,12 +16,14 @@ me.test.permutateSamples <- function(mutmat, n=1000){
   K <- numeric()
   for (i in 1:n){
     perm <- apply(bin.mutmat,1,sample)
-    K <- c(K,sum(rowSums(perm) > 0))
+    perm <- t(perm)
+    W <- get.weight(perm)
+    K <- c(K,W)
   }
   
   # calculate distribution and return empirical p
-  t <- ecdf(K)
-  p <- 1 - t(k)
+  empirical.test <- ecdf(K)
+  p <- 1 - empirical.test(k)
   
   # if p is 0, return the minimum possible p-value that makes sense
   min.p <- 1/(n+1)

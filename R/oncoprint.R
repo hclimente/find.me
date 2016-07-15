@@ -8,7 +8,7 @@ oncoprint <- function(M, keys=list(somatic="MUT", germline="GERMLINE", amp="AMP"
                       del="HOMDEL", upreg="UP", downreg="DOWN", splicing="SPLICING"), 
                       sortGenes=TRUE){
   
-  mutmat <- getSortedMatrix(M)
+  mutmat <- getSortedMatrix(M,keys,sortGenes)
 
   # order alterations and patients based on matrix
   alterations$gene <- factor(alterations$gene, levels=rev(rownames(mutmat)))

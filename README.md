@@ -61,4 +61,12 @@ to the function call. Also, the genes can be sorted by most altered gene by pass
 
 ### Assess significance
 
-**Work in progress**
+I implemented the weight function *W* described in [Dendrix paper](http://www.ncbi.nlm.nih.gov/pubmed/21653252) as a statistic to measure the mutual exclusion. By permuting the mutation matrix keeping the number of alterations per gene constant, I calculate a distribution of *W* from which I infer an empirical p-value.
+
+```
+library(oncoprint)
+data(tcga_brca)
+mutmat <- getSortedMatrix(tcga_brca)
+me.test.permutateSamples(mutmat, n=10000)
+# [1] 9.999e-05
+```
