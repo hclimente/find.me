@@ -69,4 +69,6 @@ data(tcga_brca)
 mutmat <- getSortedMatrix(tcga_brca)$mutmat
 me.test.permutateSamples(mutmat, n=10000)
 # [1] 9.999e-05
+me.test.fisher(mutmat)
+# [1] 6.495643e-17
 ```
