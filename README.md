@@ -1,18 +1,20 @@
-# Oncoprint
+# Find ME
+
+Tool based on [oncoprint](https://github.com/dakl/oncoprint) to explore and plot mutual exclusion patterns of gene alterations.
 
 ## Install
 
 Install it from local source:
 
 ```{r}
-install.packages("/path/oncoprint", repos = NULL, type="source")
+install.packages("/path/find.me", repos = NULL, type="source")
 ```
 
 Or install it directly from GitHub:
 
 ```{r}
 library(devtools)
-install_github("hclimente/oncoprint")
+install_github("hclimente/find.me")
 ```
 
 ## Usage
@@ -22,7 +24,7 @@ install_github("hclimente/oncoprint")
 This package can be used to create beautiful oncoprints in R. 
 
 ```
-library(oncoprint)
+library(find.me)
 data(tcga_brca)
 # vertical x-labels
 vert_x <- theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust=.5))
@@ -68,7 +70,7 @@ I implemented some methods to test the mutual exclusion in your data. Please, ta
 This test is described in [Babur et al.](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4381444/) as a scoring input for their algorithm to find mutual exclusion modules. It performs a Fisher's test to find unbalances between each of the genes and the aggregation of the rest. After correcting for multiple testing, returns the higher p-value as representative of the gene set.
 
 ```
-library(oncoprint)
+library(find.me)
 data(tcga_brca)
 mutmat <- getSortedMatrix(tcga_brca)$mutmat
 me.test.fisher(mutmat)
@@ -80,7 +82,7 @@ me.test.fisher(mutmat)
 I implemented the weight function *W* described in [Dendrix paper](http://www.ncbi.nlm.nih.gov/pubmed/21653252) as a statistic to measure the mutual exclusion. By permuting the mutation matrix keeping the number of alterations per gene constant, it calculates a distribution of *W* from which an empirical p-value is inferred. The minimum p-value is 1/(# permutations).
 
 ```
-library(oncoprint)
+library(find.me)
 data(tcga_brca)
 mutmat <- getSortedMatrix(tcga_brca)$mutmat
 # 10000 permutations
