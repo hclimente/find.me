@@ -1,7 +1,7 @@
 #' Function to calculate a mutual exclusion p-value in a gene set.
 #' It keeps the number of alterations in a gene fixed, and permutates
 #' the samples to calculate an empirical p-value. The minimum p-value
-#' it will return is 1/n+1.
+#' it will return is 1/n.
 #' 
 #' @param mutmat matrix, genes as rows, samples as columns
 #' @param n integer specifying the number of permutations
@@ -27,12 +27,13 @@ me.test.permutateSamples <- function(mutmat, n=10000){
   	NA
   } else {
   	# calculate distribution and return empirical p
-  	empirical.test <- ecdf(K)
-	p <- 1 - empirical.test(k)
+    # add 0.1 to avoid overly optimistic pvalues when k falls in one of the extremes
+  	empirical.test <- ecdf(K+0.1)
+    p <- 1 - empirical.test(k)
 	
-	# if p is 0, return the minimum possible p-value that makes sense
-	min.p <- 1/(n+1)
+	  # if p is 0, return the minimum possible p-value that makes sense
+	  min.p <- 1/n
 	
-	max(p,min.p)
+	  max(p,min.p)
   }
 }
