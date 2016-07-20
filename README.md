@@ -44,8 +44,8 @@ Row names are genes, column names are samples. The following annotations are all
 
 * Ampilifications (`AMP`), red fill
 * Deletions (`HOMDEL`), blue fill
-* Somatic mutations (`MUT`), green box
-* Splicing alterations (`SPLICING`), grey box
+* Somatic mutations (`MUT`), black box
+* Splicing alterations (`SPLICING`), green box
 * Germline mutations (`GERMLINE`), purple box
 * Upregulation (`UP`), red outline
 * Downregulation (`DOWN`), blue outline
@@ -85,5 +85,5 @@ data(tcga_brca)
 mutmat <- getSortedMatrix(tcga_brca)$mutmat
 # 10000 permutations
 me.test.permutateSamples(mutmat, n=10000)
-# [1] 9.999e-05
+# [1] 1e-04
 ```
