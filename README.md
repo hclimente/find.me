@@ -23,7 +23,7 @@ install_github("hclimente/find.me")
 
 This package can be used to create beautiful oncoprints in R. 
 
-```
+```{r}
 library(find.me)
 data(tcga_brca)
 # vertical x-labels
@@ -54,7 +54,7 @@ Row names are genes, column names are samples. The following annotations are all
 
 Each element is changable by passing (defaults listed below)
 
-```
+```{r}
 keys=list(somatic="MUT", germline="GERMLINE", amp="AMP", 
           del="HOMDEL", upreg="UP", downreg="DOWN", splicing="SPLICING")
 ```
@@ -69,7 +69,7 @@ I implemented some methods to test the mutual exclusion in your data. Please, ta
 
 This test is described in [Babur et al.](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4381444/) as a scoring input for their algorithm to find mutual exclusion modules. It performs a Fisher's test to find unbalances between each of the genes and the aggregation of the rest. After correcting for multiple testing, returns the higher p-value as representative of the gene set.
 
-```
+```{r}
 library(find.me)
 data(tcga_brca)
 mutmat <- getSortedMatrix(tcga_brca)$mutmat
@@ -81,7 +81,7 @@ me.test.fisher(mutmat)
 
 I implemented the weight function *W* described in [Dendrix paper](http://www.ncbi.nlm.nih.gov/pubmed/21653252) as a statistic to measure the mutual exclusion. By permuting the mutation matrix keeping the number of alterations per gene constant, it calculates a distribution of *W* from which an empirical p-value is inferred. The minimum p-value is 1/(# permutations).
 
-```
+```{r}
 library(find.me)
 data(tcga_brca)
 mutmat <- getSortedMatrix(tcga_brca)$mutmat
