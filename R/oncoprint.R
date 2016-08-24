@@ -33,9 +33,9 @@ oncoprint <- function(M, keys=list(somatic="MUT", germline="GERMLINE", amp="AMP"
                             height=c(.9,.9,.4,.95,.4,.9,.9))
   alterations <- merge(alterations,plot.params)
   
-  plot.fill <- c("amp" = "firebrick", "del" = "blue", "up" = NA, "down" = NA,
+  plot.fill <- c("amp" = "firebrick", "del" = "blue", "upreg" = NA, "downreg" = NA,
                  "splicing" = "forestgreen", "germline" = "purple", "somatic" = "#36454F")
-  plot.alpha <- c("amp" = 0.6, "del" = 0.6, "up" = 0.6, "down" = 0.6,
+  plot.alpha <- c("amp" = 0.6, "del" = 0.6, "upreg" = 0.6, "downreg" = 0.6,
                   "splicing" = 0.6, "germline" = 1, "somatic" = 1)
     
   ggplot() + 

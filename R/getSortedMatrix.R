@@ -35,7 +35,7 @@ getSortedMatrix <- function(M, keys=list(somatic="MUT", germline="GERMLINE", amp
   # // mutation > 0
   # // amp > del > 0
   scoringMatrix <- c("amp" = 128, "del" = 64, "somatic" = 32, "splicing" = 25, 
-                     "germline" = 16, "up" = 8, "down" = 4)
+                     "germline" = 16, "up" = 8, "downreg" = 4)
   mutmat <- incrementMatrix(M=mutmat, events=alterations, scoring=scoringMatrix)
   mutmat <- memoSort(mutmat, sortGenes = sortGenes)
 
