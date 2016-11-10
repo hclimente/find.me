@@ -13,8 +13,7 @@ install.packages("/path/find.me", repos = NULL, type="source")
 Or install it directly from GitHub:
 
 ```{r}
-library(devtools)
-install_github("hclimente/find.me")
+devtools::install_github("hclimente/find.me")
 ```
 
 ## Usage
