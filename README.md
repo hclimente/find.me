@@ -36,12 +36,16 @@ oncoprint(tcga_brca) + coord_fixed() + vert_x
 The main function (`oncoprint(M)`) works on a matrix of strings on on this form: 
 
 ```
-      TCGA-BH-A1EV-01 TCGA-A2-A1FW-01 TCGA-AO-A1KS-01 TCGA-D8-A1JB-01 TCGA-D8-A1JD-01
-BRCA1 ""              ""              ""              ""              ""             
-BRCA2 "AMP;"          "AMP;"          "AMP;"          "HOMDEL;"       "HOMDEL;"      
+   gene          sample alteration
+1 BRCA2 TCGA-BH-A1EV-01       AMP;
+2 BRCA2 TCGA-A2-A1FW-01       AMP;
+3 BRCA2 TCGA-AO-A1KS-01       AMP;
+4 BRCA2 TCGA-D8-A1JB-01    HOMDEL;
+5 BRCA2 TCGA-D8-A1JD-01    HOMDEL;
+6 BRCA2 TCGA-D8-A1JP-01       MUT;
 ```
 
-Row names are genes, column names are samples. The following annotations are allowed by default: 
+The following alterations are allowed by default: 
 
 * Ampilifications (`AMP`), red fill
 * Deletions (`HOMDEL`), blue fill
@@ -51,7 +55,7 @@ Row names are genes, column names are samples. The following annotations are all
 * Upregulation (`UP`), red outline
 * Downregulation (`DOWN`), blue outline
 
-Each element is changable by passing (defaults listed below)
+Each element is modifiable by passing (defaults listed below)
 
 ```{r}
 keys=list(somatic="MUT", germline="GERMLINE", amp="AMP", 
