@@ -4,12 +4,12 @@
 \alias{oncoprint}
 \title{function to create an oncoprint plot}
 \usage{
-oncoprint(M, keys = list(somatic = "MUT", germline = "GERMLINE", amp = "AMP",
+oncoprint(A, keys = list(somatic = "MUT", germline = "GERMLINE", amp = "AMP",
   del = "HOMDEL", upreg = "UP", downreg = "DOWN", splicing = "SPLICING"),
   sortGenes = TRUE)
 }
 \arguments{
-\item{M}{mutation matrix}
+\item{A}{dataframe containing the alterations}
 
 \item{keys}{list with the following elements: splicing, somatic, 
 germline, amp, del, upreg, downreg}

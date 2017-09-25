@@ -18,19 +18,19 @@ oncoprint <- function(A,
   mutmat <- M.sorted$mutmat
   alterations <- M.sorted$alterations
   genes <- M.sorted$genes
-  patients <- M.sorted$patients
+  samples <- M.sorted$samples
 
-  # order alterations and patients based on matrix
+  # order alterations and samples based on matrix
   alterations$gene <- factor(alterations$gene, levels=rev(rownames(mutmat)))
-  alterations$patient <- factor(alterations$patient, levels=colnames(mutmat))
+  alterations$sample <- factor(alterations$sample, levels=colnames(mutmat))
   
   # create background ie cases with no alteration found
-  background <- as.data.frame(matrix(0, ncol=length(patients), nrow=length(genes)))
-  colnames(background) <- patients
+  background <- as.data.frame(matrix(0, ncol=length(samples), nrow=length(genes)))
+  colnames(background) <- samples
   background$gene <- factor(genes, levels=rev(rownames(mutmat)))
   
-  background.m <- gather(background, gene, patient)
-  background.m$patient <- factor(background.m$patient, levels=colnames(mutmat))
+  background.m <- gather(background, sample, alteration, -gene)
+  background.m$sample <- factor(background.m$sample, levels=colnames(mutmat))
   
   plot.params <- data.frame(alteration = c("amp","del","somatic","splicing",
                                            "germline","upreg","downreg"), 
@@ -45,20 +45,23 @@ oncoprint <- function(A,
                   "splicing" = 0.6, "germline" = 1, "somatic" = 1)
     
   ggplot() + 
-    geom_tile(data = background.m, aes(x = patient, y = gene), 
+    geom_tile(data = background.m, aes(x = sample, y = gene), 
               fill = "#DCDCDC", colour = "white", size = 1.1) + 
-    geom_tile(data = alterations, aes(x = patient, y = gene, fill = alteration, 
+    geom_tile(data = alterations, aes(x = sample, y = gene, fill = alteration, 
                                       size = size, width = width, height = height,
                                       alpha = alteration)) +
     scale_fill_manual(values = plot.fill) +
     scale_alpha_manual(values = plot.alpha) +
     theme_minimal() + 
     labs(x = "Sample", y = "Gene") +
-    theme(axis.text.x = element_text(angle = 90, size = 9), legend.position = "none")
+    theme(axis.text.x = element_text(angle = 90, size = 9), 
+          legend.position = "none",
+          panel.grid.major = element_blank(), panel.grid.minor = element_blank())
   
 }
 
 #' @importFrom dplyr %>% group_by mutate select
+#' @importFrom tidyr spread
 long2wide <- function(alterations) {
   
   colnames(alterations) <- c("sample", "gene", "alteration")
@@ -85,15 +88,17 @@ long2wide <- function(alterations) {
 #' germline, amp, del, upreg, downreg
 #' @param sortGenes boolean whether or not to sort the genes, default TRUE
 #' @importFrom stats na.omit
-#' @importFrom reshape2 melt
+#' @importFrom tidyr gather
 getSortedMatrix <- function(M, keys=list(somatic="MUT", germline="GERMLINE", amp="AMP", 
                                          del="HOMDEL", upreg="UP", downreg="DOWN", 
                                          splicing="SPLICING"), sortGenes=TRUE){
   # convert from wide to long format
-  all <- melt(M, varnames = c("gene", "patient"), value.name = "alteration")
+  Mdf <- as.data.frame(M)
+  Mdf$gene <- rownames(Mdf)
+  all <- gather(Mdf, sample, alteration, -gene)
   
   genes <- na.omit(unique(as.character(all$gene)))
-  patients <- na.omit(unique( as.character(all$patient) ))
+  samples <- na.omit(unique( as.character(all$sample) ))
   
   # create data structure for each alteration in a list
   alterations <- list()
@@ -108,8 +113,8 @@ getSortedMatrix <- function(M, keys=list(somatic="MUT", germline="GERMLINE", amp
   alterations <- do.call("rbind",alterations)
   
   ## create numerical mutation matrix
-  mutmat <- as.data.frame(matrix(0, ncol=length(patients), nrow=length(genes)))
-  colnames(mutmat) <- patients
+  mutmat <- as.data.frame(matrix(0, ncol=length(samples), nrow=length(genes)))
+  colnames(mutmat) <- samples
   rownames(mutmat) <- genes
   
   # from https://github.com/gideonite/WIP/blob/gh-pages/oncoprint/MemoSort.js
@@ -121,21 +126,21 @@ getSortedMatrix <- function(M, keys=list(somatic="MUT", germline="GERMLINE", amp
   mutmat <- incrementMatrix(M=mutmat, events=alterations, scoring=scoringMatrix)
   mutmat <- memoSort(mutmat, sortGenes = sortGenes)
   
-  list(mutmat=mutmat,alterations=alterations,genes=genes,patients=patients)
+  list(mutmat=mutmat,alterations=alterations,genes=genes,samples=samples)
 }
 
 #' Function to increment gene matrix
-#' @param M data frame, colnames=patients, rownames=genes
-#' @param events data frame. Needs columns patient and gene
+#' @param M data frame, colnames=samples, rownames=genes
+#' @param events data frame. Needs columns sample and gene
 #' @param scoring number by which to increment
 incrementMatrix <- function(M, events, scoring){
   for(k in 1:nrow(events)){
     alteration <- events$alteration[k]
     increment <- as.numeric(scoring[alteration])
     gene <- as.character(events$gene[k])
-    patient <- as.character(events$patient[k])
+    sample <- as.character(events$sample[k])
     idx.g <- which(rownames(M)==gene)
-    idx.s <- which(colnames(M)==patient)
+    idx.s <- which(colnames(M)==sample)
     if(!is.na(gene)){ 
       M[idx.g,idx.s] <- M[idx.g,idx.s] + increment
     }
