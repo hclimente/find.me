@@ -94,8 +94,8 @@ getSortedMatrix <- function(M, keys=list(somatic="MUT", germline="GERMLINE", amp
                                          splicing="SPLICING"), sortGenes=TRUE){
   # convert from wide to long format
   Mdf <- as.data.frame(M)
-  Mdf$gene <- rownames(Mdf)
-  all <- gather(Mdf, sample, alteration, -gene)
+  Mdf$sample <- rownames(Mdf)
+  all <- gather(Mdf, gene, alteration, -sample)
   
   genes <- na.omit(unique(as.character(all$gene)))
   samples <- na.omit(unique( as.character(all$sample) ))
