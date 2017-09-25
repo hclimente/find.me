@@ -5,6 +5,8 @@
 #' 
 #' @param mutmat matrix, genes as rows, samples as columns
 #' @param n integer specifying the number of permutations
+#' @importFrom stats ecdf
+#' @export
 me.test.permutateSamples <- function(mutmat, n=10000){
   
   # convert to binary

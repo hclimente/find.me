@@ -3,6 +3,8 @@
 #' of the rest. After adjusting the p-values, it returns the maximum one.
 #' 
 #' @param mutmat matrix, genes as rows, samples as columns
+#' @importFrom stats fisher.test p.adjust
+#' @export
 me.test.fisher <- function(mutmat){
   
   # convert to binary

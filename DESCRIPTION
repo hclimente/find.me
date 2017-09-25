@@ -3,11 +3,13 @@ Type: Package
 Title: Tools to study mutual exclusion in gene alterations.
 Version: 0.3.1
 Date: 2016-07-05
-Author: Daniel Klevebring <daniel.klevebring@gmail.com>, Héctor Climente <hector.climente@upf.edu>
-Maintainer: Hector Climente <hector.climente@upf.edu>
+Authors@R: person("Hector", "Climente-Gonzalez", email = "hector.climente@curie.fr",
+                  role = c("aut", "cre"))
+Imports:
+    tidyverse (>= 1.0.0),
+    reshape2 (>= 1.4.2)
 Depends:
-    R (>= 3.0.0),
-    ggplot2,
-    reshape2
+    R (>= 3.0.0)
 Description: Tools to study mutual exclusion in gene alterations.
 License: MIT
+RoxygenNote: 6.0.1
