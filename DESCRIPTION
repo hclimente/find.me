@@ -1,6 +1,6 @@
 Package: find.me
 Type: Package
-Title: Tools to study mutual exclusion in gene alterations.
+Title: Tools to study mutual exclusion in gene alterations
 Version: 0.4.0
 Date: 2017-09-26
 Authors@R: person("Hector", "Climente-Gonzalez", email = "hector.climente@curie.fr",
