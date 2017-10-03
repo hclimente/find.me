@@ -4,7 +4,7 @@
 #' @param keys list with the following elements: splicing, somatic, 
 #' germline, amp, del, upreg, downreg
 #' @param sortGenes boolean whether or not to sort the genes, default TRUE
-#' @importFrom ggplot2 ggplot labs scale_alpha_manual scale_fill_manual theme theme_minimal geom_tile element_text aes 
+#' @importFrom ggplot2 ggplot labs scale_alpha_manual scale_fill_manual theme theme_minimal geom_tile element_text aes element_blank
 #' @importFrom tidyr gather
 #' @export
 oncoprint <- function(A, 
@@ -34,9 +34,9 @@ oncoprint <- function(A,
   
   plot.params <- data.frame(alteration = c("amp","del","somatic","splicing",
                                            "germline","upreg","downreg"), 
-                            size=c(2,2,1,1,1,2,2),
-                            width=c(.9,.9,.9,.9,.9,.9,.9),
-                            height=c(.9,.9,.4,.95,.4,.9,.9))
+                            size = c(2,2,1,1,1,2,2),
+                            width = c(.9,.9,.9,.9,.9,.9,.9),
+                            height = c(.9,.9,.4,.95,.4,.9,.9))
   alterations <- merge(alterations,plot.params)
   
   plot.fill <- c("amp" = "firebrick", "del" = "blue", "upreg" = NA, "downreg" = NA,
@@ -93,7 +93,7 @@ getSortedMatrix <- function(M, keys=list(somatic="MUT", germline="GERMLINE", amp
                                          del="HOMDEL", upreg="UP", downreg="DOWN", 
                                          splicing="SPLICING"), sortGenes=TRUE){
   # convert from wide to long format
-  Mdf <- as.data.frame(M)
+  Mdf <- as.data.frame(M, stringsAsFactors = F)
   Mdf$sample <- rownames(Mdf)
   all <- gather(Mdf, gene, alteration, -sample)
   
